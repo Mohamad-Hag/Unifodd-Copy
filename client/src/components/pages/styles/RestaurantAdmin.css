@@ -1,0 +1,18 @@
+.admin-dashboard-container
+{
+  height: 100vh;
+  width: 100%;
+  box-sizing: border-box;  
+  display: flex;
+  overflow: hidden;
+
+
+}
+.main-content{
+  width: 100%;
+  margin-top: 71px;
+  padding: 10px;
+  background-color: #c5cbd4;
+  overflow: auto;
+box-sizing: border-box;
+}

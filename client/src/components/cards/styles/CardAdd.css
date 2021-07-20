@@ -1,0 +1,33 @@
+.background-add{
+    display: flex;
+    justify-content: center;
+    }
+.card-addition{
+    width: 70%;
+    height: auto;
+    background: white;
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.16),0 2px 10px 0 rgba(0,0,0,0.12);
+    transition: all 0.3s;
+    padding: 20px;
+    overflow:auto;
+    display: flex;
+    flex-direction: column;
+    background-color:#dcdcdc;
+    margin: 85px;
+   
+}
+
+.submit-add{
+    background: var(--primary-color);
+    color: white;
+}
+.form-group{
+margin: 40px;
+}
+.header-add{
+    text-align: center;
+}
+.Radio-button{
+    display: flex;
+    gap:30px;
+}
