@@ -9,7 +9,7 @@ const db =DBConnection.connect();
 
 router.get('/get',(req,res)=>{
     const restID=req.session.user[0].ID;
-    const sqlSelect = "SELECT o.ID AS OID, o.TotalPrice, o.Date, o.Note, o.Status, o.CustomerID,c.UserID ,c.ID ,u.ID ,u.Name AS UserName FROM \`order\` o, order_item i,product p,category ca ,customer c ,user u WHERE o.ID = i.OrderID and i.productID = p.ID and p.CategoryID =ca.ID and ca.RestaurantID = ? and o.CustomerID = c.ID and c.UserID = u.ID GROUP BY o.ID;"
+    const sqlSelect = "SELECT o.ID AS OID, o.TotalPrice, o.Date, o.Note, o.Status, o.CustomerID,c.UserID ,c.ID ,u.ID ,u.Name AS UserName FROM \`order\` o, order_item i,product p,category ca ,customer c ,user u WHERE o.ID = i.OrderID and i.productID = p.ID and p.CategoryID =ca.ID and ca.RestaurantID = ? and o.CustomerID = c.ID and c.UserID = u.ID GROUP BY o.ID ORDER BY o.Date DESC"
     db.query(sqlSelect,restID,(err,result)=>{
       if(err){
         console.log(err);
@@ -42,7 +42,7 @@ router.post('/getLessOrder',(req,res)=>{
     })
   }
   else{
-    const sqlSelect = `SELECT o.ProductName, SUM(DISTINCT o.Amount) As total FROM order d, order_item o, restaurant r,category c,product p WHERE o.ProductID = p.ID and p.CategoryID = c.ID and d.ID = o.OrderID and MONTH(Date(d.Date)) = ${index} and r.ID = ? and r.ID = c.RestaurantID and d.Status='delivered' GROUP BY o.ProductName ORDER BY SUM(o.Amount) ASC LIMIT 10;`
+    const sqlSelect = `SELECT o.ProductName, SUM(DISTINCT o.Amount) As total FROM \`order\` d, order_item o, restaurant r,category c,product p WHERE o.ProductID = p.ID and p.CategoryID = c.ID and d.ID = o.OrderID and MONTH(Date(d.Date)) = ${index} and r.ID = ? and r.ID = c.RestaurantID and d.Status='delivered' GROUP BY o.ProductName ORDER BY SUM(o.Amount) ASC LIMIT 10;`
     db.query(sqlSelect,restID,(err,result)=>{
       if(err){
         console.log(err);

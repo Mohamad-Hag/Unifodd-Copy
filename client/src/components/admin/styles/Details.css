@@ -11,6 +11,7 @@
 .left-side
 {
     width: 400px;
+    flex: 1;
 }
 .admin-details-container .details-card > div,
 .admin-details-container .reviews-container > div {

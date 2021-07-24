@@ -250,9 +250,7 @@ class CustomerSearch extends Component {
                       title: restaurant.Name,
                       caption:
                         restaurant.IsClosed === 0 ? "Open Naow" : "Closed",
-                      photo: `${getHost()}/images/restaurants/${
-                        restaurant.Name
-                      }/profile-image/${restaurant.Image}`,
+                      photo: `${getHost()}/images/restaurants-images/${restaurant.Image}`,
                       to: `/restaurants#restaurant${this.state.allRestaurants.findIndex(
                         (c) => c.ID === restaurant.ID
                       )}`,

@@ -36,7 +36,7 @@ router.post('/add', (req, res) => {
 
     // NEEDED DIRECTORIES
     let restaurantDir = `public/images/restaurants/${name}/`;
-    let restaurantProfile = `public/images/restaurants/${name}/profile-image/`;
+    let restaurantProfile = `public/images/restaurants-images/`;
     let restaurantProducts = `public/images/restaurants/${name}/products/`;
     let restaurantCategories = `public/images/restaurants/${name}/categories/`;
 
@@ -130,7 +130,7 @@ router.post('/add', (req, res) => {
                                             }
                                             else
                                             {
-                                                file.mv(`public/images/restaurants/${name}/profile-image/${finalFileName}`, err => {
+                                                file.mv(`public/images/restaurants-images/${finalFileName}`, err => {
                                                     if(err){ 
                                                         return res.json({
                                                             status: 'bad',
@@ -226,7 +226,6 @@ router.get('/:name', (req, res) => {
         }  
     })
 })
-
 router.post('/:name/edit', (req, res) => {
 
     let userName = req.params.name;
@@ -243,7 +242,7 @@ router.post('/:name/edit', (req, res) => {
     let file;
     let finalFileName;
 
-    let imagePath = `public/images/restaurants/${userName}/profile-image/${oldImage}`;
+    let imagePath = `public/images/restaurants-images/${oldImage}`;
     
     const updateUser = "UPDATE user SET Name = ?, Phone = ? WHERE Name = ?";
     const updateRestaurant = "UPDATE restaurant SET Password = ?, Image = ? WHERE UserID = ?";
@@ -291,20 +290,7 @@ router.post('/:name/edit', (req, res) => {
                     else
                     {
                         if(req.files == null){ 
-                            if(newUserName !== userName)
-                            {
-                                let currentRestaurantDir = `public/images/restaurants/${userName}/`;
-                                let newRestaurantDir = `public/images/restaurants/${newUserName}/`;
-                                fileStream.rename(currentRestaurantDir, newRestaurantDir, (err) => {
-                                    if(err){
-                                        console.log(err);
-                                        return JsonResRest('bad', '*Something went wrong while trying to update dir, try again later', restaurant, res)
-                                    }    
-                                    else 
-                                        return JsonResRest('good', 'Restaurant edited successfully', restaurant, res)
-                                })
-                            }
-                            else return JsonResRest('good', 'Restaurant edited successfully', restaurant, res) 
+                            return JsonResRest('good', '', restaurant, res) 
                         }
                         else
                         {       
@@ -315,7 +301,7 @@ router.post('/:name/edit', (req, res) => {
                                 }
                                 else
                                 {
-                                    let folderPath = `public/images/restaurants/${userName}/profile-image/${finalFileName}`;
+                                    let folderPath = `public/images/restaurants-images/${finalFileName}`;   
                                     file.mv(folderPath, (err) => {
                                         if(err){
                                             console.log(err);
@@ -323,21 +309,7 @@ router.post('/:name/edit', (req, res) => {
                                         }
                                         else
                                         {
-                                            if(newUserName !== userName)
-                                            {
-                                                let currentRestaurantDir = `public/images/restaurants/${userName}/`;
-                                                let newRestaurantDir = `public/images/restaurants/${newUserName}/`;
-                                                fileStream.rename(currentRestaurantDir, newRestaurantDir, (err) => {
-                                                    if(err) {
-                                                        console.log(err)
-                                                        return JsonResRest('bad', '*Something went wrong while trying to update dir, try again later', restaurant, res);
-                                                    }
-                                                    else
-                                                        JsonResRest('good', 'Restaurant edited successfully', restaurant, res) 
-                                                })
-                                            }
-                                            else
-                                                return JsonResRest('good', 'Restaurant edited successfully', restaurant, res)    
+                                            return JsonResRest('good', '', restaurant, res)    
                                         }
                                     })
                                 }
@@ -349,6 +321,128 @@ router.post('/:name/edit', (req, res) => {
         })
     }
 })
+// router.post('/:name/edit', (req, res) => {
+
+//     let userName = req.params.name;
+
+//     let id = req.body.id;
+//     let newUserName = req.body.name;
+//     let password = req.body.password;
+//     let phone = req.body.phone;
+//     let isClosed = req.body.isClosed;
+//     let isExist = req.body.isExist;
+//     let userID = req.body.userID;
+//     let oldImage = req.body.oldImg;
+
+//     let file;
+//     let finalFileName;
+
+//     let imagePath = `public/images/restaurants/${userName}/profile-image/${oldImage}`;
+    
+//     const updateUser = "UPDATE user SET Name = ?, Phone = ? WHERE Name = ?";
+//     const updateRestaurant = "UPDATE restaurant SET Password = ?, Image = ? WHERE UserID = ?";
+
+//     if(isEmpty(newUserName) || isEmpty(password) || isEmpty(phone)) { return JsonRes('bad', '*Feilds cannot be empty', res); }
+    
+//     else
+//     {
+//         if(req.files == null){ 
+//             finalFileName = req.body.img;
+//         }
+//         else
+//         {
+//             file = req.files.img;
+//             const fileExt = req.files.img.name.split('.').pop();
+//             const fileName = Math.random().toString(16).slice(2);
+//             finalFileName = fileName + '.' + fileExt;
+//         }
+
+//         let restaurant = [
+//             {
+//                 ID: id,
+//                 Name: newUserName,
+//                 Password: password,
+//                 Phone: phone,
+//                 IsClosed: isClosed,
+//                 IsExist: isExist,
+//                 UserID: userID,
+//                 Image: finalFileName
+//             }
+//         ]
+
+//         db.query(updateUser, [newUserName, phone, userName], (err) => {
+//             if(err) {
+//                 console.log(err)
+//                 return JsonResRest('bad', '*Something went wrong while trying to update User info, try again later', restaurant, res);
+//             }
+//             else
+//             {
+//                 db.query(updateRestaurant, [password, finalFileName, id], (err) => {
+//                     if(err) {
+//                         console.log(err)
+//                         return JsonResRest('bad', '*Something went wrong while trying to update Restaurant info, try again later', restaurant, res);
+//                     }
+//                     else
+//                     {
+//                         if(req.files == null){ 
+//                             if(newUserName !== userName)
+//                             {
+//                                 let currentRestaurantDir = `public/images/restaurants/${userName}/`;
+//                                 let newRestaurantDir = `public/images/restaurants/${newUserName}/`;
+//                                 fileStream.rename(currentRestaurantDir, newRestaurantDir, (err) => {
+//                                     if(err){
+//                                         console.log(err);
+//                                         return JsonResRest('bad', '*Something went wrong while trying to update dir, try again later', restaurant, res)
+//                                     }    
+//                                     else 
+//                                         return JsonResRest('good', 'Restaurant edited successfully', restaurant, res)
+//                                 })
+//                             }
+//                             else return JsonResRest('good', 'Restaurant edited successfully', restaurant, res) 
+//                         }
+//                         else
+//                         {       
+//                             fileStream.unlink(imagePath, (err) => {
+//                                 if(err){
+//                                     console.log(err);
+//                                     return JsonResRest('bad', '*Something went wrong while trying to update image, try again later', restaurant, res);
+//                                 }
+//                                 else
+//                                 {
+//                                     let folderPath = `public/images/restaurants/${userName}/profile-image/${finalFileName}`;
+//                                     file.mv(folderPath, (err) => {
+//                                         if(err){
+//                                             console.log(err);
+//                                             return JsonResRest('bad', '*Something went wrong while trying to move image, try again later', restaurant, res);
+//                                         }
+//                                         else
+//                                         {
+//                                             if(newUserName !== userName)
+//                                             {
+//                                                 let currentRestaurantDir = `public/images/restaurants/${userName}/`;
+//                                                 let newRestaurantDir = `public/images/restaurants/${newUserName}/`;
+//                                                 fileStream.rename(currentRestaurantDir, newRestaurantDir, (err) => {
+//                                                     if(err) {
+//                                                         console.log(err)
+//                                                         return JsonResRest('bad', '*Something went wrong while trying to update dir, try again later', restaurant, res);
+//                                                     }
+//                                                     else
+//                                                         JsonResRest('good', 'Restaurant edited successfully', restaurant, res) 
+//                                                 })
+//                                             }
+//                                             else
+//                                                 return JsonResRest('good', 'Restaurant edited successfully', restaurant, res)    
+//                                         }
+//                                     })
+//                                 }
+//                             })
+//                         }     
+//                     }
+//                 })
+//             }
+//         })
+//     }
+// })
 
 router.post('/:name/hide', (req, res) => {
     let ID = req.body.id

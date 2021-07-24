@@ -52,6 +52,7 @@ class Hidden extends Component {
     }
     else if(value == "Yes"){
         this.handleUnhide(this.state.resID, this.state.resName);
+        this.setState({ hiddePopupState: "false" });
     }
   }
   componentDidMount = () => {

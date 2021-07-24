@@ -1,4 +1,4 @@
-import React, { Component } from  "react";
+import React, { Component } from "react";
 import "./styles/App.css";
 import { Route, BrowserRouter as Router, Switch } from "react-router-dom";
 import Entry from "../pages/Entry";
@@ -58,6 +58,14 @@ class App extends Component {
             <Route exact component path="/services">
               <Services />
             </Route>
+            <Route exact component path="/profile">
+              <Profile />
+            </Route>
+            <Route exact component path="/cart">
+              <Cart />
+            </Route>
+
+            
             <Route
               path="/restaurants/:name"
               render={(props) => <Products {...props} />}
@@ -66,26 +74,20 @@ class App extends Component {
             <Route component path="/restaurant_admin">
               <RestaurantAdmin />
             </Route>
-            
+
             <Route
               path="/restaurant/:restaurant/product/:id"
               render={(props) => <Product {...props} />}
             />
-          </Switch>
-          <Route exact component path="/profile">
-            <Profile />
-          </Route>
-          <Route exact component path="/cart">
-            <Cart />
-          </Route>
 
-          {/* ADDED BY MAJD */}
-          <Route path="/admin">
-            <AdminDashboard />
-          </Route>
-          <Route exact path="/admin_enter/entery">
-            <AdminEnter />
-          </Route>
+            {/* ADDED BY MAJD */}
+            <Route path="/admin">
+              <AdminDashboard />
+            </Route>
+            <Route exact path="/admin_enter/entery">
+              <AdminEnter />
+            </Route>
+          </Switch>
         </Router>
       </div>
     );

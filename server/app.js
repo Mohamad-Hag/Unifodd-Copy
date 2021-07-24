@@ -56,7 +56,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
 app.use(cors({
-  origin: ["http://localhost:3000"],
+  origin: ["http://localhost:3000", "http://192.168.43.85:3000"],
   methods: ["GET","POST","PUT","DELETE"],
   credentials: true
 }

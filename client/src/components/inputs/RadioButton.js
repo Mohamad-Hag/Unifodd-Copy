@@ -27,7 +27,7 @@ class RadioButton extends Component {
           checked={this.props.checked}
           value={this.props.value}
         />
-        <label class="form-check-label" for={this.props.controlId}>
+        <label class="form-check-label" htmlFor={this.props.controlId}>
           {this.props.text}
         </label>
       </div>

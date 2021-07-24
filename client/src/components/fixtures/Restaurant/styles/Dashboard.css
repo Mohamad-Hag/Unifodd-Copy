@@ -59,12 +59,16 @@
   border-radius: 4px;
   box-shadow: 0 22px 40px #00000010;
   transition: 0.1s;
+  position: relative;
 }
 .profit {
   width: 10%;
   border: none;
-  position: relative;
+  position: absolute;
+  width: 150px;
   top: 0px;
+  top: 15px;
+  padding: 5px;
 }
 .restaurant-box1 span,
 .restaurant-box2 span,

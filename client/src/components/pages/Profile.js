@@ -62,13 +62,37 @@ class Profile extends Component {
         let formData = new FormData();
         formData.append("id", Cookies.get("id"));
         formData.append("img", this.state.image);
+
         let api = `${getHost()}/customer/uploadprofilephoto`;
         Axios.post(api, formData).then((response) => {
-          let data = response.data;          
+          let data = response.data;
           console.log(data);
         });
       });
     } catch {}
+  }
+  getCartCount() {
+    let storage = localStorage;
+    let items = JSON.parse(storage.getItem("items"));
+    if (!items || items.length === 0) return null;
+    return items.length.toString();
+  }
+  notificationsClosed() {
+    if (this.state.isNotificationsOpen === "true") {
+      this.setState({ isNotificationsOpen: "false" });
+    }
+  }
+  async setNotificationsCount() {
+    const getNotificationsAPI = `${getHost()}/customer/getnotifications`;
+    const id = Cookies.get("id");
+    const postData = { id: id };
+    await Axios.post(getNotificationsAPI, postData).then((response) => {
+      let data = response.data;
+
+      this.setState({
+        notificationsCount: data.filter((x) => !x.isRead).length,
+      });
+    });
   }
   getCartCount() {
     let storage = localStorage;

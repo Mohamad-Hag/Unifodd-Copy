@@ -34,6 +34,7 @@ class RestaurantAdmin extends Component {
     this.state = {
       restName: "",
       result: [],
+      resID: 0,
       isNotificationsOpen: "false", // For Change Opening State Of Notifications Panel.
       notificationsCount: null, // For Change The Number Of Notifications Items.
       cartCount: null, // For Change The Number Of Cart Items.
@@ -49,6 +50,17 @@ class RestaurantAdmin extends Component {
     this.searchButtonClicked = this.searchButtonClicked.bind(this);
     this.onNotificationsClose = this.onNotificationsClose.bind(this);
     this.onNotificationsOpen = this.onNotificationsOpen.bind(this);
+    this.setNotificationCount = this.setNotificationCount.bind(this);
+  }
+  setNotificationCount()
+  {
+    const api = `${getHost()}/Notification/count`;
+    axios.get(api).then((resp) => {
+      let data = resp.data;
+      let count = data.count.toString();
+      this.setState({notificationsCount: count});
+    });
+    
   }
 
   // Event Triggered When Mark As Read Button Clicked.
@@ -61,7 +73,11 @@ class RestaurantAdmin extends Component {
       let notifications = [];
       await axios.get(api).then((response) => {
         let data = response.data;
+        for (let res of data) {
+          res.isRestaurant = this.state.restID;
+        }
         notifications = data;
+        console.log(notifications);
       });
       resolve(notifications);
     });
@@ -97,8 +113,13 @@ class RestaurantAdmin extends Component {
     this.setState({ cartCount: "10", notificationsCount: "12" });
   }
   componentDidMount() {
+    this.setNotificationCount();
     axios.get("http://localhost:3001/RestaurantProfile/get").then((resp) => {
-      this.setState({ result: resp.data.result, restName: resp.data.restName });
+      this.setState({
+        result: resp.data.result,
+        restName: resp.data.restName,
+        restID: resp.data.restID,
+      });
     });
   }
   render() {
@@ -203,7 +224,9 @@ class RestaurantAdmin extends Component {
               cartOnClick={this.cartButtonClicked} // Optional
               searchOnClick={this.searchButtonClicked} // Optional
               notificationsHandler={this.getNotifications} // Required (Very Important)
+              notificationsCount={this.state.notificationsCount}
               profileLink="/restaurant_admin/profile"
+              canSeeAllNotifications={false}
               //profilePhoto={"http://localhost:3001/images/restaurants/${this.state.restName}/profile-image/${val.Image}"}
             />
           );

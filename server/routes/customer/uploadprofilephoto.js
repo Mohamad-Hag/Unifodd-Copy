@@ -3,9 +3,6 @@ const { DBConnection } = require("../../assist/DBConnection");
 const router = express.Router();
 const db = DBConnection.connect();
 const path = require("path");
-const fileUpload = require("express-fileupload");
-
-router.use(fileUpload());
 
 let responseData = {
   message: "",

@@ -39,6 +39,7 @@ class Restaurant extends Component {
     }
     else if(value == "Yes"){
       this.handleHide(this.state.resID, this.state.resName);
+      this.setState({ hiddePopupState: "false" });
     }
   }
 

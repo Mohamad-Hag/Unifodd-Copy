@@ -70,15 +70,17 @@ class AddProduct extends Component {
   };
 
   handleImageChange = (event) => {
-    this.setState({ image: event.target.files[0] });
-    this.setState({ imagename: event.target.files[0].name });
+    try {
+      this.setState({ image: event.target.files[0] });
+      this.setState({ imagename: event.target.files[0].name });
+    } catch {}
   };
   handleIsAvailableChange = (event) => {
     this.setState({ isAvailable: event.target.value });
   };
 
   componentDidMount() {}
-  handleSubmit = async (event) => {    
+  handleSubmit = async (event) => {
     event.preventDefault();
     let nameField = $("#add-name-in");
     let nameValue = nameField.val();
@@ -141,16 +143,14 @@ class AddProduct extends Component {
       formData.append("isAvailable", this.state.isAvailable);
       formData.append("category", this.state.category);
 
-      await axios
-        .post(`${getHost()}}/Product/insert`, formData)
-        .then((resp) => {
-          this.setState({
-            filename: resp.data.fileName,
-            filepath: resp.data.filePath,
-            Successmessage: resp.data.Successmessage,
-            Errormessage: resp.data.Errormessage,
-          });
+      await axios.post(`${getHost()}/Product/insert`, formData).then((resp) => {
+        this.setState({
+          filename: resp.data.fileName,
+          filepath: resp.data.filePath,
+          Successmessage: resp.data.Successmessage,
+          Errormessage: resp.data.Errormessage,
         });
+      });
     }
   };
   componentDidMount() {
@@ -320,19 +320,17 @@ class AddProduct extends Component {
               <div className="form-group Radio-button">
                 &nbsp;Status :
                 <RadioButton
-                  id="Available"
+                  controlId="Available"
                   groupName="status"
-                  for="Available"
                   text="Available"
-                  value="1"
+                  value={1}
                   onChange={this.handleIsAvailableChange}
                 />
                 <RadioButton
-                  id="notAvailable"
+                  controlId="notAvailable"
                   groupName="status"
-                  for="notAvailable"
                   text="Not Available"
-                  value="0"
+                  value={0}
                   onChange={this.handleIsAvailableChange}
                 />
               </div>

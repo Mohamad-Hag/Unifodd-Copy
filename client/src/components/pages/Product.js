@@ -191,9 +191,7 @@ class Product extends Component {
     let api = `${getHost()}/customer/getrestaurantbyname`;
     Axios.post(api, restaurantData).then((response) => {
       let data = response.data;
-      let image = `${getHost()}/images/restaurants/${data.Name}/profile-image/${
-        data.Image
-      }`;
+      let image = `${getHost()}/images/restaurants-images/${data.Image}`;
       let isClosed = data.IsClosed;
       let id = data.ID;
       let restaurantName = data.Name;
@@ -456,13 +454,19 @@ class Product extends Component {
       console.log(data);
       if (data.IsExist === 0) window.location.replace("/restaurants");
       let hasTags = false;
-      if (data.HasOffer || !Boolean(data.IsAvailable) || data.IsNew)
+      let isAvailable =
+        this.state.isRestaurantClosed === 0 ? Boolean(data.IsAvailable) : false;
+      if (data.HasOffer || !isAvailable || data.IsNew)
         hasTags = true;
       this.setState(
         {
           from: "Deep House",
           name: data.Name,
-          price: `${data.Price}`,
+          price: `${
+            data.HasOffer
+              ? ((100 - data.OfferPercentage) * data.Price) / 100
+              : data.Price
+          }`,
           description: data.Description,
           isAddedToCart: false,
           isFavorite: data.IsFavorite,
@@ -473,7 +477,7 @@ class Product extends Component {
           isNew: data.IsNew,
           isOffer: data.HasOffer,
           offerTooltip: data.HasOffer ? data.OfferDescription : null,
-          isAvailable: Boolean(data.IsAvailable),
+          isAvailable: isAvailable,
           image: data.Image,
           isExist: data.IsExist,
         },
@@ -519,7 +523,7 @@ class Product extends Component {
           searchOnClick={this.searchClicked}
           profilePhoto={`${getHost()}/images/customers/${
             this.state.user.Image
-          }`}
+          }`}          
           profileLink="/profile"
           notificationsLink="/notifications"
         />

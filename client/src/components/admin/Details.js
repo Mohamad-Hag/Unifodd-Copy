@@ -8,6 +8,7 @@ import $ from 'jquery';
 import Cookies from '../assitance-methods/Cookies';
 import RichTextBox from '../inputs/RichTextBox';
 import getHost from '../assitance-methods/getHost';
+import { Label } from 'recharts';
 
 
 
@@ -263,10 +264,10 @@ class Detail extends Component {
                   {
                     this.state.edit === 'false' // IF 
                     ?
-                    <div className="admin-relative img-edit-container" style={{ backgroundImage: `url('${getHost()}/images/restaurants/${this.state.folderName}/profile-image/${this.state.Restaurant.Image}')` }}>
+                    <div className="admin-relative img-edit-container" style={{ backgroundImage: `url('${getHost()}/images/restaurants-images/${this.state.Restaurant.Image}')` }}>
                     </div>
                     :
-                    <div id="img" className="admin-relative img-edit-container" style={{ backgroundImage: `url('${getHost()}/images/restaurants/${this.state.folderName}/profile-image/${this.state.Restaurant.Image}')` }}>
+                    <div id="img" className="admin-relative img-edit-container" style={{ backgroundImage: `url('${getHost()}/images/restaurants-images/${this.state.Restaurant.Image}')` }}>
                         <label htmlFor="upload-btn" className="admin-absolute upload-icon-edit admin-flex admin-justify-center admin-align-center">
                           <i class="bi bi-card-image"></i>
                         </label>
@@ -282,7 +283,7 @@ class Detail extends Component {
                           {
                             this.state.edit === 'true' // IF 
                             ?
-                            <TextBox placeholder={this.state.Restaurant.Name} onInput={this.handleNameChange} />
+                            <h1 onInput={this.handleNameChange} disabled={true}>{this.state.Restaurant.Name}</h1>
                             :
                             <h1>{this.state.Restaurant.Name}</h1> 
                           }

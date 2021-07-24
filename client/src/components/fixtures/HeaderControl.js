@@ -92,25 +92,36 @@ class HeaderControl extends Component {
         ),
       });
     }
-        if (newPro.isNotificationsVisible === "false") {
-          this.setState({ notificationsIcon: null });
-        } else {
-          this.setState({
-            notificationsIcon: (
-              <IconButton
-                tooltip="Notifications"
-                count={newPro.notificationsCount}
-                iconClass="bi bi-bell-fill"
-                id="notifications-icon-btn"
-                onClick={newPro.notificationsOnClick}
-              />
-            ),
-          });
-        }
+    if (newPro.isNotificationsVisible === "false") {
+      this.setState({ notificationsIcon: null });
+    } else {
+      this.setState({
+        notificationsIcon: (
+          <IconButton
+            tooltip="Notifications"
+            count={newPro.notificationsCount}
+            iconClass="bi bi-bell-fill"
+            id="notifications-icon-btn"
+            onClick={newPro.notificationsOnClick}
+          />
+        ),
+      });
+    }
   }
   render() {
     return (
       <div ref={this.ref} id="header-control-container">
+        {this.props.extraIcon ? (
+          <IconButton
+            tooltip={this.props.extraTooltip}
+            count={this.props.extraIconCount ? this.props.extraIconCount : null}
+            iconClass={
+              this.props.extraIcon ? this.props.extraIcon : "bi bi-app"
+            }
+            id="notifications-icon-btn"
+            onClick={this.props.extraIconOnClick}
+          />
+        ) : null}
         {this.state.searchIcon}
         {this.state.cartIcon}
         {this.state.notificationsIcon}

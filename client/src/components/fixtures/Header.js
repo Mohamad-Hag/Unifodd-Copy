@@ -37,6 +37,10 @@ class Header extends Component {
             cartOnClIsick={this.cartClicked}
             notificationsOnClick={this.props.notificationsOnClick}
             searchOnClick={this.props.searchOnClick}
+            extraIcon={this.props.extraIcon}
+            extraIconOnClick={this.props.extraIconOnClick}
+            extraIconCount={this.props.extraIconCount}
+            extraTooltip={this.props.extraTooltip}
           />
           <a href={this.props.profileLink}>
             <img
@@ -44,7 +48,7 @@ class Header extends Component {
               src={this.props.profilePhoto}
               onError={(e) => {
                 e.currentTarget.setAttribute("src", NothingImg);
-              }}  
+              }}
               alt=""
               draggable="false"
             />
@@ -58,6 +62,7 @@ class Header extends Component {
           notificationsHandler={this.props.notificationsHandler}
           isOpen={this.props.isNotificationsOpen}
           notificationsLink={this.props.notificationsLink}
+          canSeeAll={this.props.canSeeAllNotifications}
         />
       ),
       isMenuOpen: "false",
@@ -112,6 +117,10 @@ class Header extends Component {
               cartOnClick={this.cartClicked}
               notificationsOnClick={newPro.notificationsOnClick}
               searchOnClick={newPro.searchOnClick}
+              extraIcon={newPro.extraIcon}
+              extraIconOnClick={newPro.extraIconOnClick}
+              extraIconCount={newPro.extraIconCount}
+              extraTooltip={newPro.extraTooltip}
             />
             <a href={this.props.profileLink}>
               <img
@@ -134,6 +143,7 @@ class Header extends Component {
             notificationsHandler={newPro.notificationsHandler}
             isOpen={newPro.isNotificationsOpen}
             notificationsLink={newPro.notificationsLink}
+            canSeeAll={newPro.canSeeAllNotifications}
           />
         ),
         isMenuOpen: "false",

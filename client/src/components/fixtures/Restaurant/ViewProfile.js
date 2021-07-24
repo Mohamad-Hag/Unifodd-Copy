@@ -340,11 +340,11 @@ class ViewProfile extends Component {
       <div>
         {this.state.result.map((val) => {
           if (val.IsClosed === 1) {
-            $("Open").attr("checked", true);
-            this.state.Status = "Open";
-          } else {
             $("Closed").attr("checked", true);
             this.state.Status = "Closed";
+          } else {
+            $("Open").attr("checked", true);
+            this.state.Status = "Open";
           }
           if (this.state.Status === "Open") {
             $(".status").css("color", "green");
@@ -375,9 +375,7 @@ class ViewProfile extends Component {
                 >
                   <img
                     id="rest-profile-img"
-                    src={`${getHost()}/images/restaurants/${
-                      this.state.restName
-                    }/profile-image/${val.Image}`}
+                    src={`${getHost()}/images/restaurants-images/${val.Image}`}
                     alt={val.Image}
                     onClick={this.onClickImage}
                   />
@@ -396,10 +394,10 @@ class ViewProfile extends Component {
                   {this.state.ImageSuccessmessage}
                 </p>
               </div>
-              <p className="profile-settings-title">
+              {/* <p className="profile-settings-title">
                 <i className="bi bi-circle-fill"></i>General
-              </p>
-              <TextBox
+              </p> */}
+              {/* <TextBox
                 inputId="username-in"
                 errorId="username-error"
                 error={this.state.errors.usernameError}
@@ -416,8 +414,8 @@ class ViewProfile extends Component {
                 type="number"
                 onChange={this.phoneChanged}
                 onInput={this.phoneFieldInputed}
-              />
-              <p className="result-error-message">
+              /> */}
+              {/* <p className="result-error-message">
                 {this.state.GeneralErrormessage}
               </p>
               <p className="result-success-message">
@@ -428,7 +426,7 @@ class ViewProfile extends Component {
                 text="Save Changes&nbsp;&nbsp;&nbsp;"
                 iconClass="bi bi-save"
                 onClick={this.saveGeneralClicked}
-              />
+              /> */}
               <p className="profile-settings-title">
                 <i className="bi bi-circle-fill"></i>Change Password
               </p>
@@ -465,29 +463,28 @@ class ViewProfile extends Component {
                 {this.state.Status}
                 <span
                   className="fa fa-angle-down"
+                  style={{ cursor: "pointer" }}
                   onClick={this.showStatus}
                 ></span>
               </p>
               <div id="radio-div" className="form-group profile-Radio-button">
                 <RadioButton
-                  id="Open"
+                  controlId="Open"
                   groupName="status"
-                  for="Open"
                   text="Open"
                   value={1}
                   onChange={this.IsClosedChanged}
                 />
                 <RadioButton
-                  id="Closed"
+                  controlId="Closed"
                   groupName="status"
-                  for="Closed"
                   text="Closed"
                   value={0}
                   onChange={this.IsClosedChanged}
                 />
                 <DefaultButton
                   id="IsClosed"
-                  text="save Status"
+                  text="Save Status"
                   className="save-status"
                   onClick={this.saveIsClosedClicked}
                 />

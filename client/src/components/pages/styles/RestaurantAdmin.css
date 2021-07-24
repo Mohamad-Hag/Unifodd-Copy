@@ -11,8 +11,7 @@
 .main-content{
   width: 100%;
   margin-top: 71px;
-  padding: 10px;
-  background-color: #c5cbd4;
+  padding: 10px;  
   overflow: auto;
 box-sizing: border-box;
 }

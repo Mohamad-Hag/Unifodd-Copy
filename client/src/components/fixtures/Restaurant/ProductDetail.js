@@ -188,7 +188,7 @@ class ProductDetail extends Component {
                         <p class="product_description">{val.ProductDescription}</p>
 
                         <div className="form-group">
-                        <DefaultButton  style={{background:"#f0eeeb",border:"#f0eeeb",color:"var(--primary-color)"}} text="add a discount if you want" onClick={this.discountShow}/>
+                        <DefaultButton id="add-disconut-btn" text="add a discount if you want" onClick={this.discountShow}/>
                         <form onSubmit={this.handleSubmit}>
                         <TextBox
                               inputId="product-discount-in"

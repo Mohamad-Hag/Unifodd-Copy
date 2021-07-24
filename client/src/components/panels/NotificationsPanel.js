@@ -112,17 +112,19 @@ class NotificationsPanel extends Component {
         <div id="notifications-panel-items">
           {this.state.notificationsItems}
         </div>
-        <div id="notifications-panel-footer">
-          <DefaultButton
-            text="See All Notifications"
-            iconClass="bi bi-chevron-right"
-            onClick={() => {
-              window.location.href = this.props.notificationsLink
-                ? this.props.notificationsLink
-                : "#";
-            }}
-          />
-        </div>
+        {this.props.canSeeAll === false ? null : (
+          <div id="notifications-panel-footer">
+            <DefaultButton
+              text="See All Notifications"
+              iconClass="bi bi-chevron-right"
+              onClick={() => {
+                window.location.href = this.props.notificationsLink
+                  ? this.props.notificationsLink
+                  : "#";
+              }}
+            />
+          </div>
+        )}
       </div>
     );
   }

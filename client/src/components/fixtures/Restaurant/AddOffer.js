@@ -43,7 +43,7 @@ class AddOffer extends Component {
       let ProductID = this.state.ProductID;
       axios
         .get(`${getHost()}/Product/getPriceDescription/${ProductID}`)
-        .then((resp) => {
+        .then((resp) => {                    
           this.setState({ result: resp.data });
         });
     });
@@ -67,7 +67,7 @@ class AddOffer extends Component {
       const formData = new FormData();
       formData.append("Discount", this.state.Discount);
       formData.append("ProductID", this.state.ProductID);
-      formData.append("Description", this.state.Description);
+      formData.append("Description", "Discount " + this.state.Discount + "%");
       await axios
         .post(`${getHost()}/Offer/insertOffer`, formData)
         .then((resp) => {
@@ -151,7 +151,7 @@ class AddOffer extends Component {
                         class="form-control"
                         placeholder="Description"
                         disabled
-                        value={this.state.Description}
+                        value={"Discount " + this.state.Discount + "%"}
                         onChange={this.handleDescriptionChange}
                       />
                     </div>

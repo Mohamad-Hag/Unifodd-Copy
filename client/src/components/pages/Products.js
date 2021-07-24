@@ -89,9 +89,7 @@ class Products extends Component {
     let api = `${getHost()}/customer/getrestaurantbyname`;
     Axios.post(api, restaurantData).then((response) => {
       let data = response.data;
-      let image = `${getHost()}/images/restaurants/${data.Name}/profile-image/${
-        data.Image
-      }`;
+      let image = `${getHost()}/images/restaurants-images/${data.Image}`;
       let isClosed = data.IsClosed;
       let id = data.ID;
       let restaurantName = data.Name;
@@ -448,8 +446,11 @@ class Products extends Component {
             </p>
           </div>
           {this.state.products.map((product, i) => {
-            let hasTags = false;
-            let isAvailable = Boolean(product.IsAvailable);
+            let hasTags = false;            
+            let isAvailable =
+              this.state.isRestaurantClosed === 0
+                ? Boolean(product.IsAvailable)
+                : false;
             if (!isAvailable || product.IsNew || product.HasOffer)
               hasTags = true;
             return (
@@ -461,7 +462,7 @@ class Products extends Component {
                 price={
                   "$" +
                   (product.HasOffer
-                    ? product.Price * (product.OfferPercentage / 100)
+                    ? ((100 - product.OfferPercentage) * product.Price) / 100
                     : product.Price)
                 }
                 description={product.Description}
@@ -472,9 +473,7 @@ class Products extends Component {
                 hasTags={hasTags}
                 isOffer={product.HasOffer}
                 isNew={product.IsNew}
-                isAvailable={
-                  this.state.isRestaurantClosed === 0 ? isAvailable : false
-                }
+                isAvailable={isAvailable}
                 rating={product.Rate}
                 offerTooltip={product.OfferDescription}
                 removeOnFavorite={
